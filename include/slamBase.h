@@ -14,14 +14,22 @@
 #include <map>
 using namespace std;
 
+// Eigen
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+
 // OpenCV
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
 
-//PCL
+
+// PCL
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
+#include <pcl/common/transforms.h>
+#include <pcl/visualization/cloud_viewer.h>
+#include <pcl/filters/voxel_grid.h>
 
 // 类型定义
 typedef pcl::PointXYZRGBA PointT;
@@ -62,6 +70,12 @@ void computeKeyPointsAndDesp( FRAME& frame, string detector, string descriptor )
 // estimateMotion 计算两个帧之间的运动
 // 输入：帧1和帧2, 相机内参
 RESULT_OF_PNP estimateMotion( FRAME& frame1, FRAME& frame2, CAMERA_INTRINSIC_PARAMETERS& camera );
+
+// cvMat2Eigen
+Eigen::Isometry3d cvMat2Eigen( cv::Mat& rvec, cv::Mat& tvec );
+
+// joinPointCloud 
+PointCloud::Ptr joinPointCloud( PointCloud::Ptr original, FRAME& newFrame, Eigen::Isometry3d T, CAMERA_INTRINSIC_PARAMETERS& camera ) ;
 
 // 参数读取类
 class ParameterReader
@@ -109,3 +123,15 @@ public:
 public:
     map<string, string> data;
 };
+
+inline static CAMERA_INTRINSIC_PARAMETERS getDefaultCamera()
+{
+    ParameterReader pd;
+    CAMERA_INTRINSIC_PARAMETERS camera;
+    camera.fx = atof( pd.getData( "camera.fx" ).c_str());
+    camera.fy = atof( pd.getData( "camera.fy" ).c_str());
+    camera.cx = atof( pd.getData( "camera.cx" ).c_str());
+    camera.cy = atof( pd.getData( "camera.cy" ).c_str());
+    camera.scale = atof( pd.getData( "camera.scale" ).c_str() );
+    return camera;
+}
