@@ -10,7 +10,7 @@ using namespace std;
 #include <pcl/point_types.h>
 
 typedef pcl::PointXYZRGBA PointT;
-typedef pcl::PointCloud<PoinT> PointCloud;
+typedef pcl::PointCloud<PointT> PointCloud;
 
 const double camera_factor =1000;
 const double camera_cx = 325.5;
@@ -24,12 +24,12 @@ int main( int argc, char** argv ){
     depth = cv::imread("./data/depth.png" );
     PointCloud::Ptr cloud (new PointCloud );
 
-    for (int m = 0; m < depth.ros; m++ ){
+    for (int m = 0; m < depth.rows; m++ ){
         for (int n = 0;n < depth.cols; n++ ){
             ushort d = depth.ptr<ushort>(m)[n];
             if (d == 0)
                 continue;
-            PoinT p;
+            PointT p;
             p.z = double(d) / camera_factor;
             p.x = (n - camera_cx ) * p.z / camera_fx;
             p.y = (m - camera_cy ) * p.z / camera_fy;
