@@ -1,12 +1,23 @@
+/*************************************************************************
+	> File Name: rgbd-slam-tutorial-gx/part III/code/include/slamBase.h
+	> Author: xiang gao
+	> Mail: gaoxiang12@mails.tsinghua.edu.cn
+	> Created Time: 2015年07月18日 星期六 15时14分22秒
+    > 说明：rgbd-slam教程所用到的基本函数（C风格）
+ ************************************************************************/
 # pragma once
 
+// 各种头文件 
+// C++标准库
 #include <fstream>
 #include <vector>
+#include <map>
 using namespace std;
 
 // OpenCV
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
 
 //PCL
 #include <pcl/io/pcd_io.h>
@@ -21,6 +32,7 @@ struct CAMERA_INTRINSIC_PARAMETERS
 { 
     double cx, cy, fx, fy, scale;
 };
+
 // 帧结构
 struct FRAME
 {
