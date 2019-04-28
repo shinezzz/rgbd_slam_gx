@@ -2,3 +2,5 @@
 build/
 bin/
 pointcloud.pcd
+data/result.pcd
+lib/
