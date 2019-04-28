@@ -1,5 +1,4 @@
 # part 4 里定义的参数
-# 特征类型
 detector=ORB
 descriptor=ORB
 # 筛选good match的倍数
@@ -16,7 +15,7 @@ camera.scale=1000.0;
 # 数据相关
 # 起始与终止索引
 start_index=1
-end_index=700
+end_index=780
 # 数据所在目录
 rgb_dir=/home/zhouhao/GraduationProject/data/rgb_png/
 rgb_extension=.png
@@ -31,4 +30,12 @@ min_good_match=10
 # 最小内点
 min_inliers=5
 # 最大运动误差
-max_norm=0.3
+max_norm=0.2
+
+# part 7
+keyframe_threshold=0.1
+max_norm_lp=2.0
+# Loop closure
+check_loop_closure=yes
+nearby_loops=5
+random_loops=5
